@@ -9,32 +9,68 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class JsonWriter {
+
+    public static JSONObject objMain = new JSONObject();
+    public static JSONArray list = new JSONArray();
+    public static int i=0;
+
     public static void main(String[] args) {
 
+        String questionType1 = "radio button";
+        String questionText1 = "do you have some problems with your hearth?";
+        String[] answerText1 = {"yes", "no"};
+
+        String questionType2 = "check boxes";
+        String questionText2 = "which memebers of your family have heart problems?";
+        String[] answerText2 = {"your mother", "your father", "your uncle", "your aunt"};
+
+
+        writeJsonToFile(questionType1, questionText1, answerText1);
+        writeJsonToFile(questionType2, questionText2, answerText2);
+    }
+
+    public static void questionDetailsJsonObj(String questionType, String questionText, String[] answerText) {
+        i++;
         JSONObject obj = new JSONObject();
-        obj.put("name", "mkyong.com");
-        obj.put("age", new Integer(100));
+        writeQuestionType(obj, questionType);
+        writeQuestionText(obj, questionText);
+        writeAnswerText(obj, list, answerText);
 
-        JSONArray list = new JSONArray();
-        list.add("msg 1");
-        list.add("msg 2");
-        list.add("msg 3");
+        objMain.put("question number " + i, obj);
 
-        obj.put("messages", list);
+    }
+
+    public static void writeJsonToFile(String questionType, String questionText, String[] answerText) {
+
+        questionDetailsJsonObj(questionType, questionText, answerText);
 
         try {
 
             FileWriter file = new FileWriter("C:\\Users\\Xelnect\\Desktop\\JSonWritten.json");
-            file.write(obj.toJSONString());
+            file.write(String.valueOf(objMain));
             file.flush();
             file.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        System.out.print(obj);
 
+
+
+
+    public static void writeAnswerText(JSONObject obj, JSONArray list, String[] answerText) {
+        for (int i = 0; i < answerText.length; i++) {
+            list.add(answerText[i]);
+        }
+        obj.put("answerText", list);
+    }
+    public static void writeQuestionText(JSONObject obj, String questionText) {
+        obj.put("questionText", questionText);
+    }
+    public static void writeQuestionType(JSONObject obj, String questionType) {
+        obj.put("questionType", questionType);
     }
 
 }
