@@ -11,7 +11,6 @@ import java.io.IOException;
 public class JsonWriter {
 
     public static JSONObject objMain = new JSONObject();
-    public static JSONArray list = new JSONArray();
     public static int i=0;
 
     public static void main(String[] args) {
@@ -31,6 +30,7 @@ public class JsonWriter {
 
     public static void questionDetailsJsonObj(String questionType, String questionText, String[] answerText) {
         i++;
+        JSONArray list = new JSONArray();
         JSONObject obj = new JSONObject();
         writeQuestionType(obj, questionType);
         writeQuestionText(obj, questionText);
